@@ -35,9 +35,9 @@
     </select>
 
     <label for="origen">Origen</label>
-    <input type="text" id="origen" placeholder="Direcci®Æn o sector de recogida" required>
+    <input type="text" id="origen" placeholder="Direcci√≥n o sector de recogida" required>
 
-    <button type="button" id="btnUbicacion" class="secundario">?? Compartir mi ubicaci®Æn</button>
+    <button type="button" id="btnUbicacion" class="secundario">üìç Compartir mi ubicaci√≥n</button>
     <p id="estadoUbicacion" class="nota"></p>
 
     <label for="destino">Destino</label>
@@ -47,8 +47,8 @@
       <option>Quito Centro</option>
       <option>Quito Sur</option>
       <option>Valle de los Chillos</option>
-      <option>Cumbay®¢ / Tumbaco</option>
-      <option>Calder®Æn</option>
+      <option>Cumbay√° / Tumbaco</option>
+      <option>Calder√≥n</option>
       <option>Otra ciudad</option>
     </select>
 
@@ -58,24 +58,24 @@
     <label for="franja">Franja horaria</label>
     <select id="franja" required>
       <option value="">Selecciona una franja</option>
-      <option>Ma?ana (6:00 a 12:00)</option>
+      <option>Ma√±ana (6:00 a 12:00)</option>
       <option>Tarde (12:00 a 18:00)</option>
       <option>Noche (18:00 a 22:00)</option>
     </select>
 
-    <label for="vehiculo">Tipo de veh®™culo</label>
+    <label for="vehiculo">Tipo de veh√≠culo</label>
     <select id="vehiculo" required>
-      <option value="">Selecciona un veh®™culo</option>
+      <option value="">Selecciona un veh√≠culo</option>
       <option>Camioneta</option>
       <option>Furgoneta</option>
-      <option>Cami®Æn peque?o</option>
-      <option>Cami®Æn grande</option>
+      <option>Cami√≥n peque√±o</option>
+      <option>Cami√≥n grande</option>
     </select>
 
     <label for="estibadores">Estibadores</label>
     <select id="estibadores" required>
-      <option value="">Selecciona una opci®Æn</option>
-      <option>S®™, contratar estibadores</option>
+      <option value="">Selecciona una opci√≥n</option>
+      <option>S√≠, contratar estibadores</option>
       <option>No contratar estibadores</option>
     </select>
 
@@ -84,7 +84,7 @@
 </div>
 
 <script>
-  // N®≤mero de WhatsApp que recibe los pedidos (c®Ædigo de Ecuador 593, sin el 0 inicial)
+  // N√∫mero de WhatsApp que recibe los pedidos (c√≥digo de Ecuador 593, sin el 0 inicial)
   var NUMERO_WHATSAPP = '59398951397' + '3';
 
   var ubicacion = '';
@@ -92,17 +92,17 @@
   document.getElementById('btnUbicacion').addEventListener('click', function() {
     var estado = document.getElementById('estadoUbicacion');
     if (!navigator.geolocation) {
-      estado.textContent = 'Tu navegador no permite obtener la ubicaci®Æn.';
+      estado.textContent = 'Tu navegador no permite obtener la ubicaci√≥n.';
       return;
     }
-    estado.textContent = 'Obteniendo ubicaci®Æn...';
+    estado.textContent = 'Obteniendo ubicaci√≥n...';
     navigator.geolocation.getCurrentPosition(function(pos) {
       var lat = pos.coords.latitude;
       var lon = pos.coords.longitude;
       ubicacion = 'https://www.google.com/maps?q=' + lat + ',' + lon;
-      estado.textContent = '? Ubicaci®Æn obtenida.';
+      estado.textContent = '‚úî Ubicaci√≥n obtenida.';
     }, function() {
-      estado.textContent = 'No se pudo obtener la ubicaci®Æn. Revisa los permisos del navegador.';
+      estado.textContent = 'No se pudo obtener la ubicaci√≥n. Revisa los permisos del navegador.';
     }, { enableHighAccuracy: true, timeout: 15000 });
   });
 
@@ -126,10 +126,10 @@
       'Destino: ' + destino + '\n' +
       'Fecha: ' + fecha.value + '\n' +
       'Franja horaria: ' + franja + '\n' +
-      'Veh®™culo: ' + vehiculo + '\n' +
+      'Veh√≠culo: ' + vehiculo + '\n' +
       'Estibadores: ' + estibadores;
     if (ubicacion) {
-      mensaje += '\nMi ubicaci®Æn: ' + ubicacion;
+      mensaje += '\nMi ubicaci√≥n: ' + ubicacion;
     }
 
     var url = 'https://wa.me/' + NUMERO_WHATSAPP + '?text=' + encodeURIComponent(mensaje);
