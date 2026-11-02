@@ -27,6 +27,9 @@
     <label for="nombre">Nombre del cliente</label>
     <input type="text" id="nombre" placeholder="Escribe tu nombre" required>
 
+    <label for="telefono">Teléfono del cliente</label>
+    <input type="tel" id="telefono" placeholder="Ej: 0991234567" required>
+
     <label for="servicio">Tipo de servicio</label>
     <select id="servicio" required>
       <option value="">Selecciona un servicio</option>
@@ -35,9 +38,9 @@
     </select>
 
     <label for="origen">Origen</label>
-    <input type="text" id="origen" placeholder="DirecciÃ³n o sector de recogida" required>
+    <input type="text" id="origen" placeholder="Dirección o sector de recogida" required>
 
-    <button type="button" id="btnUbicacion" class="secundario">ðŸ“ Compartir mi ubicaciÃ³n</button>
+    <button type="button" id="btnUbicacion" class="secundario">📍 Compartir mi ubicación</button>
     <p id="estadoUbicacion" class="nota"></p>
 
     <label for="destino">Destino</label>
@@ -47,8 +50,8 @@
       <option>Quito Centro</option>
       <option>Quito Sur</option>
       <option>Valle de los Chillos</option>
-      <option>CumbayÃ¡ / Tumbaco</option>
-      <option>CalderÃ³n</option>
+      <option>Cumbayá / Tumbaco</option>
+      <option>Calderón</option>
       <option>Otra ciudad</option>
     </select>
 
@@ -58,24 +61,24 @@
     <label for="franja">Franja horaria</label>
     <select id="franja" required>
       <option value="">Selecciona una franja</option>
-      <option>MaÃ±ana (6:00 a 12:00)</option>
+      <option>Mañana (6:00 a 12:00)</option>
       <option>Tarde (12:00 a 18:00)</option>
       <option>Noche (18:00 a 22:00)</option>
     </select>
 
-    <label for="vehiculo">Tipo de vehÃ­culo</label>
+    <label for="vehiculo">Tipo de vehículo</label>
     <select id="vehiculo" required>
-      <option value="">Selecciona un vehÃ­culo</option>
+      <option value="">Selecciona un vehículo</option>
       <option>Camioneta</option>
       <option>Furgoneta</option>
-      <option>CamiÃ³n pequeÃ±o</option>
-      <option>CamiÃ³n grande</option>
+      <option>Camión pequeño</option>
+      <option>Camión grande</option>
     </select>
 
     <label for="estibadores">Estibadores</label>
     <select id="estibadores" required>
-      <option value="">Selecciona una opciÃ³n</option>
-      <option>SÃ­, contratar estibadores</option>
+      <option value="">Selecciona una opción</option>
+      <option>Sí, contratar estibadores</option>
       <option>No contratar estibadores</option>
     </select>
 
@@ -84,7 +87,7 @@
 </div>
 
 <script>
-  // NÃºmero de WhatsApp que recibe los pedidos (cÃ³digo de Ecuador 593, sin el 0 inicial)
+  // Número de WhatsApp que recibe los pedidos (código de Ecuador 593, sin el 0 inicial)
   var NUMERO_WHATSAPP = '59398951397' + '3';
 
   var ubicacion = '';
@@ -92,17 +95,17 @@
   document.getElementById('btnUbicacion').addEventListener('click', function() {
     var estado = document.getElementById('estadoUbicacion');
     if (!navigator.geolocation) {
-      estado.textContent = 'Tu navegador no permite obtener la ubicaciÃ³n.';
+      estado.textContent = 'Tu navegador no permite obtener la ubicación.';
       return;
     }
-    estado.textContent = 'Obteniendo ubicaciÃ³n...';
+    estado.textContent = 'Obteniendo ubicación...';
     navigator.geolocation.getCurrentPosition(function(pos) {
       var lat = pos.coords.latitude;
       var lon = pos.coords.longitude;
       ubicacion = 'https://www.google.com/maps?q=' + lat + ',' + lon;
-      estado.textContent = 'âœ” UbicaciÃ³n obtenida.';
+      estado.textContent = '✔ Ubicación obtenida.';
     }, function() {
-      estado.textContent = 'No se pudo obtener la ubicaciÃ³n. Revisa los permisos del navegador.';
+      estado.textContent = 'No se pudo obtener la ubicación. Revisa los permisos del navegador.';
     }, { enableHighAccuracy: true, timeout: 15000 });
   });
 
@@ -112,6 +115,7 @@
   document.getElementById('formulario').addEventListener('submit', function(e) {
     e.preventDefault();
     var nombre = document.getElementById('nombre').value;
+    var telefono = document.getElementById('telefono').value;
     var servicio = document.getElementById('servicio').value;
     var origen = document.getElementById('origen').value;
     var destino = document.getElementById('destino').value;
@@ -121,15 +125,16 @@
 
     var mensaje = 'Hola, quiero reservar un flete/mudanza en Quito.\n' +
       'Nombre: ' + nombre + '\n' +
+      'Teléfono: ' + telefono + '\n' +
       'Servicio: ' + servicio + '\n' +
       'Origen: ' + origen + '\n' +
       'Destino: ' + destino + '\n' +
       'Fecha: ' + fecha.value + '\n' +
       'Franja horaria: ' + franja + '\n' +
-      'VehÃ­culo: ' + vehiculo + '\n' +
+      'Vehículo: ' + vehiculo + '\n' +
       'Estibadores: ' + estibadores;
     if (ubicacion) {
-      mensaje += '\nMi ubicaciÃ³n: ' + ubicacion;
+      mensaje += '\nMi ubicación: ' + ubicacion;
     }
 
     var url = 'https://wa.me/' + NUMERO_WHATSAPP + '?text=' + encodeURIComponent(mensaje);
