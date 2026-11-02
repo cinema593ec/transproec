@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fletes y Mudanzas Quito</title>
+<style>
+  * { box-sizing: border-box; }
+  body { font-family: Arial, sans-serif; background: #f2f4f7; margin: 0; padding: 20px; }
+  .contenedor { max-width: 480px; margin: 0 auto; background: #fff; padding: 24px; border-radius: 12px; box-shadow: 0 2px 10px rgba(0,0,0,.1); }
+  .logo { display: block; width: 160px; max-width: 60%; height: auto; margin: 0 auto 12px; }
+  h1 { font-size: 22px; margin-top: 0; color: #1a3c6e; text-align: center; }
+  label { display: block; margin: 14px 0 6px; font-weight: bold; }
+  select, input, button { width: 100%; padding: 10px; font-size: 16px; border: 1px solid #ccc; border-radius: 8px; }
+  button { background: #25d366; color: #fff; border: none; margin-top: 20px; cursor: pointer; font-weight: bold; }
+  button:hover { background: #1ebe5a; }
+  button.secundario { background: #1a3c6e; margin-top: 10px; }
+  button.secundario:hover { background: #14305a; }
+  .nota { font-size: 14px; color: #555; margin: 6px 0 0; }
+</style>
+</head>
+<body>
+<div class="contenedor">
+  <img src="logo.png" alt="Transproec fletes y mudanzas" class="logo">
+  <h1>Reserva tu flete o mudanza en Quito</h1>
+  <form id="formulario">
+    <label for="nombre">Nombre del cliente</label>
+    <input type="text" id="nombre" placeholder="Escribe tu nombre" required>
+
+    <label for="servicio">Tipo de servicio</label>
+    <select id="servicio" required>
+      <option value="">Selecciona un servicio</option>
+      <option>Flete</option>
+      <option>Mudanza</option>
+    </select>
+
+    <label for="origen">Origen</label>
+    <input type="text" id="origen" placeholder="Direcci車n o sector de recogida" required>
+
+    <button type="button" id="btnUbicacion" class="secundario">?? Compartir mi ubicaci車n</button>
+    <p id="estadoUbicacion" class="nota"></p>
+
+    <label for="destino">Destino</label>
+    <select id="destino" required>
+      <option value="">Selecciona un destino</option>
+      <option>Quito Norte</option>
+      <option>Quito Centro</option>
+      <option>Quito Sur</option>
+      <option>Valle de los Chillos</option>
+      <option>Cumbay芍 / Tumbaco</option>
+      <option>Calder車n</option>
+      <option>Otra ciudad</option>
+    </select>
+
+    <label for="fecha">Fecha</label>
+    <input type="date" id="fecha" required>
+
+    <label for="franja">Franja horaria</label>
+    <select id="franja" required>
+      <option value="">Selecciona una franja</option>
+      <option>Ma?ana (6:00 a 12:00)</option>
+      <option>Tarde (12:00 a 18:00)</option>
+      <option>Noche (18:00 a 22:00)</option>
+    </select>
+
+    <label for="vehiculo">Tipo de veh赤culo</label>
+    <select id="vehiculo" required>
+      <option value="">Selecciona un veh赤culo</option>
+      <option>Camioneta</option>
+      <option>Furgoneta</option>
+      <option>Cami車n peque?o</option>
+      <option>Cami車n grande</option>
+    </select>
+
+    <label for="estibadores">Estibadores</label>
+    <select id="estibadores" required>
+      <option value="">Selecciona una opci車n</option>
+      <option>S赤, contratar estibadores</option>
+      <option>No contratar estibadores</option>
+    </select>
+
+    <button type="submit">Reservar por WhatsApp</button>
+  </form>
+</div>
+
+<script>
+  // N迆mero de WhatsApp que recibe los pedidos (c車digo de Ecuador 593, sin el 0 inicial)
+  var NUMERO_WHATSAPP = '59398951397' + '3';
+
+  var ubicacion = '';
+
+  document.getElementById('btnUbicacion').addEventListener('click', function() {
+    var estado = document.getElementById('estadoUbicacion');
+    if (!navigator.geolocation) {
+      estado.textContent = 'Tu navegador no permite obtener la ubicaci車n.';
+      return;
+    }
+    estado.textContent = 'Obteniendo ubicaci車n...';
+    navigator.geolocation.getCurrentPosition(function(pos) {
+      var lat = pos.coords.latitude;
+      var lon = pos.coords.longitude;
+      ubicacion = 'https://www.google.com/maps?q=' + lat + ',' + lon;
+      estado.textContent = '? Ubicaci車n obtenida.';
+    }, function() {
+      estado.textContent = 'No se pudo obtener la ubicaci車n. Revisa los permisos del navegador.';
+    }, { enableHighAccuracy: true, timeout: 15000 });
+  });
+
+  var fecha = document.getElementById('fecha');
+  fecha.min = new Date().toISOString().split('T')[0];
+
+  document.getElementById('formulario').addEventListener('submit', function(e) {
+    e.preventDefault();
+    var nombre = document.getElementById('nombre').value;
+    var servicio = document.getElementById('servicio').value;
+    var origen = document.getElementById('origen').value;
+    var destino = document.getElementById('destino').value;
+    var estibadores = document.getElementById('estibadores').value;
+    var franja = document.getElementById('franja').value;
+    var vehiculo = document.getElementById('vehiculo').value;
+
+    var mensaje = 'Hola, quiero reservar un flete/mudanza en Quito.\n' +
+      'Nombre: ' + nombre + '\n' +
+      'Servicio: ' + servicio + '\n' +
+      'Origen: ' + origen + '\n' +
+      'Destino: ' + destino + '\n' +
+      'Fecha: ' + fecha.value + '\n' +
+      'Franja horaria: ' + franja + '\n' +
+      'Veh赤culo: ' + vehiculo + '\n' +
+      'Estibadores: ' + estibadores;
+    if (ubicacion) {
+      mensaje += '\nMi ubicaci車n: ' + ubicacion;
+    }
+
+    var url = 'https://wa.me/' + NUMERO_WHATSAPP + '?text=' + encodeURIComponent(mensaje);
+    window.open(url, '_blank');
+  });
+</script>
+</body>
+</html>
