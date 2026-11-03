@@ -58,13 +58,8 @@
     <label for="fecha">Fecha</label>
     <input type="date" id="fecha" required>
 
-    <label for="franja">Franja horaria</label>
-    <select id="franja" required>
-      <option value="">Selecciona una franja</option>
-      <option>Mañana (6:00 a 12:00)</option>
-      <option>Tarde (12:00 a 18:00)</option>
-      <option>Noche (18:00 a 22:00)</option>
-    </select>
+    <label for="franja">Hora</label>
+    <input type="time" id="franja" required>
 
     <label for="vehiculo">Tipo de vehículo</label>
     <select id="vehiculo" required>
@@ -75,11 +70,11 @@
       <option>Camión grande</option>
     </select>
 
-    <label for="estibadores">Estibadores</label>
+    <label for="estibadores">Cargadores</label>
     <select id="estibadores" required>
       <option value="">Selecciona una opción</option>
-      <option>Sí, contratar estibadores</option>
-      <option>No contratar estibadores</option>
+      <option>Sí, contratar cargadores</option>
+      <option>No contratar cargadores</option>
     </select>
 
     <button type="submit">Reservar por WhatsApp</button>
@@ -130,9 +125,9 @@
       'Origen: ' + origen + '\n' +
       'Destino: ' + destino + '\n' +
       'Fecha: ' + fecha.value + '\n' +
-      'Franja horaria: ' + franja + '\n' +
+      'Hora: ' + franja + '\n' +
       'Vehículo: ' + vehiculo + '\n' +
-      'Estibadores: ' + estibadores;
+      'Cargadores: ' + estibadores;
     if (ubicacion) {
       mensaje += '\nMi ubicación: ' + ubicacion;
     }
